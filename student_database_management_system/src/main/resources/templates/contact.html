@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org" th:replace="~{base::layout(~{::title}, ~{::section})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Contact Us Page</title>
+</head>
+
+<body>
+	<section class="contact">
+
+		<div class="content">
+			<h2>Contact Us</h2>
+			<p>Student Database Management System questions? We're your data detectives!</p>
+		</div>
+
+		<div class="container">
+			<div class="contactInfo">
+				<div class="box">
+					<div class="icon">
+						<img src="/img/map.png" alt="map_logo" />
+					</div>
+					<div class="text">
+						<h3>Address</h3>
+						<p>Shree Vidyadhiraj Polytechnic, <br>Near AV Baliga College, <br>581343</p>
+					</div>
+				</div>
+
+				<div class="box">
+					<div class="icon">
+						<img src="/img/phone.png" alt="map_logo" />
+
+					</div>
+					<div class="text">
+						<h3>Phone</h3>
+						<p>1234567890</p>
+					</div>
+				</div>
+
+				<div class="box">
+					<div class="icon">
+						   <img src="/img/mail.png" alt="map_logo" />
+					</div>
+					<div class="text">
+						<h3>Email</h3>
+						<p>youreemail@gmail.com</p>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="contactForm">
+				<form action="https://api.web3forms.com/submit" method="POST">
+					<h2>Send Message</h2>
+					<input type="hidden" name="access_key" value="98c42425-b1b8-4308-a7b1-e0324a5bfe5f">
+
+					<div class="inputBox">
+						<input type="text" name="name" required />
+						<span>Full Name</span>
+					</div>
+
+					<div class="inputBox">
+						<input type="email" name="email" required />
+						<span>Email</span>
+					</div>
+
+					<div class="inputBox">
+						<textarea name="message" required></textarea>
+						<span>Type Your Queries</span>
+					</div>
+
+
+					<div class="inputBox">
+						<input type="submit" name="" value="Send" />
+
+					</div>
+
+				</form>
+			</div>
+
+
+		</div>
+
+	</section>
+
+
+</body>
+
+</html>

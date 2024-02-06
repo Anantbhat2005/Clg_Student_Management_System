@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org" th:replace="~{base::layout(~{::title}, ~{::section})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Student Deatils Save</title>
+</head>
+
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-6" offset-md-3>
+					<div class="card">
+						<div class="card-header" text-center>
+							<p class="fs-4">Add Student Details</p>
+							
+							<th:block th:if="${session.msg}">
+								<p class="text-center text-success fs-4">
+									[[${session.msg}]]
+								</p>
+								<th:block th:text="${@studServiceImp1.removeSessionMessage()}"></th:block>
+							</th:block>
+							
+						</div>
+						<div class="card-body">
+
+							<form action="/saveStud" method="post"> 
+								<div class="mb-3">
+									<label for="exampleInputEmail1" class="form-label">Register Number</label>
+									<input type="text" class="form-control" id="exampleInputEmail1" name="regnum"
+										aria-describedby="emailHelp">
+
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Student's Name</label>
+									<input type="text" class="form-control" id="exampleInputPassword1" name="name">
+								</div>
+
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Date Of Birth</label>
+									<input type="date" class="form-control" id="exampleInputPassword1" name="dob">
+								</div>
+
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Gender</label>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="gender"
+											id="inlineRadio1" value="option1">
+										<label class="form-check-label" for="inlineRadio1">Male</label>
+									</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="gender"
+											id="inlineRadio2" value="female">
+										<label class="form-check-label" for="inlineRadio2">Female</label>
+									</div>
+					
+
+								</div>
+
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Student's Email</label>
+									<input type="email" class="form-control" id="exampleInputPassword1" name="email">
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Student's Contact Number</label>
+									<input type="tel" class="form-control" id="exampleInputPassword1" name="snum">
+								</div>
+
+
+								<div class="mb-3">
+								<label for="class">Class</label>
+								<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+									name="sclass">
+									<option selected>Choose your class</option>
+									<option value="1">1st Sem</option>
+									<option value="2">2nd Sem</option>
+									<option value="3">3rd Sem</option>
+									<option value="4">4th Sem</option>
+									<option value="5">5th Sem</option>
+									<option value="6">6th Sem</option>
+								</select>
+
+								<label for="branch">Branch</label>
+								<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref"
+									name="branch">
+									<option selected>Choose your branch</option>
+									<option value="CS">Computer Science & Engineering</option>
+									<option value="ME">Mechanical Engineering</option>
+									<option value="EC">Electronics & Communication Engineering</option>
+									<option value="AU">Automobile Engineering</option>
+									<option value="CE">Civil Engineering</option>
+								</select>
+								</div>
+
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Address</label>
+									<input type="text" class="form-control" id="exampleInputPassword1" name="address">
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Father's Name</label>
+									<input type="text" class="form-control" id="exampleInputPassword1" name="fname">
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Mother's Name</label>
+									<input type="text" class="form-control" id="exampleInputPassword1" name="mname">
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Father's Occupation</label>
+									<input type="text" class="form-control" id="exampleInputPassword1"  name="focc">
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Mother's Occupation</label>
+									<input type="text" class="form-control" id="exampleInputPassword1" name="mocc">
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Parent's Email</label>
+									<input type="email" class="form-control" id="exampleInputPassword1" name="pemail">
+								</div>
+
+								<div class="mb-3">
+									<label for="exampleInputPassword1" class="form-label">Parent's Contact
+										Number</label>
+									<input type="tel" class="form-control" id="exampleInputPassword1" name="pnum">
+								</div>
+
+								
+								<button type="submit" class="btn btn-primary btn-lg btn-block" >Submit</button>
+							<button type="reset" class="btn btn-secondary btn-lg btn-block">Reset</button>
+
+							</form>
+
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org" th:replace="~{base::layout(~{::title}, ~{::section})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Index Page</title>
+
+</head>
+
+<body>
+	<section>
+		<div class="container p-5">
+			<div class="row">
+				<div class="col-md-80" offset-md-2>
+					<div class="card">
+						<div class="card-header text-center fs-4">Student Deatils</div>
+						
+						<th:block th:if="${session.msg}">
+								<p class="text-center text-success fs-4">
+									[[${session.msg}]]
+								</p>
+								<th:block th:text="${@studServiceImp1.removeSessionMessage()}"></th:block>
+							</th:block>
+					
+					<div class="card-body">
+
+						<table class="table">
+							<thead class="table-dark">
+								<tr>
+									<th scope="col">ID</th>
+									<th scope="col">REGISTER NO</th>
+									<th scope="col">NAME</th>
+									<th scope="col">DOB</th>
+									<th scope="col">GENDER</th>
+									<th scope="col">EMAIL</th>
+									<th scope="col">PH NO</th>
+									<th scope="col">CLASS</th>
+									<th scope="col">BRANCH</th>
+									<th scope="col">ACTION</th>
+									
+									
+									
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="s,c:${studList}">
+									<th scope="row">[[${c.count}]]</th>
+									<td>[[${s.regnum}]]</td>
+									<td>[[${s.name}]]</td>
+									<td>[[${s.dob}]]</td>
+									<td>[[${s.gender}]]</td>
+									<td>[[${s.email}]]</td>
+									<td>[[${s.snum}]]</td>
+									<td>[[${s.sclass}]]</td>
+									<td>[[${s.branch}]]</td>
+									<td>
+									
+									<a th:href="@{'editStud/' +${s.id}}" class="btn btn-sm btn-primary">Edit</a>
+									<a th:href="@{'deleteStud/' +${s.id}}" class="btn btn-sm btn-danger">Delete</a>
+									</td>
+									
+								</tr>
+							
+							</tbody>
+							
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+
+</html>
