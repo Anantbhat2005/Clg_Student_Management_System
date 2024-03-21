@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org" th:replace="~{base::layout(~{::title}, ~{::section})}">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Home Page</title>
+
+</head>
+
+<body>
+	<section>
+		<link rel="stylesheet" th:href="@{/css/home.css}" />
+		<div class="container">
+			<div class="box-container">
+			<div class="box">
+				<a href="/loadStudSave"><img src="/img/s-form.png" alt="Add student form" /></a>
+				<h3>Add Student</h3>
+				<p>Empowers teachers to quickly add new students directly from the homepage.Our easy-to-use form saves
+					you time and ensures your class lists are always up-to-date.</p>
+					
+			</div>
+
+			<div class="box">
+				<a href="/editStud"><img src="/img/v-stud.png" alt="view student form"/></a>
+				<h3>View & Edit Student</h3>
+				<p>Empowers teachers to easily view and update student data through our user-friendly forms</p>
+				
+			</div>
+
+			<div class="box">
+				<img src="/img/ma-form.png" alt="add marks & attendence" />
+				<h3>Add Marks & Attendence</h3>
+				<p>Take control of grading and attendance with our user-friendly interface. Record student marks and
+					attendance directly within the system, saving you valuable time and paperwork</p>
+					
+			</div>
+</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

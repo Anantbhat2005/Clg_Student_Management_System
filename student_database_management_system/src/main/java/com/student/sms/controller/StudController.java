@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +22,35 @@ public class StudController
 	
 	@Autowired
 	private StudService studService;
+
+	
 	
 	@GetMapping("/")
+	public String home()
+	{
+		return "home";
+	}
+	@GetMapping("/home")
+	public String homePage()
+	{
+		return "home";
+	}
+	
+	@GetMapping("/aboutus")
+	public String about()
+	{
+		return "aboutus";
+	}
+	
+	@GetMapping("/editStud")
 	public String index(Model m)
 	{
 		List<StudDet> list=studService.getAllStud();
 		m.addAttribute("studList",list);
 		return "index";
 	}
+	
+	
 	
 	@GetMapping("/loadStudSave")
 	public String loadStudSave()
@@ -43,6 +65,8 @@ public class StudController
 		m.addAttribute("stud", stud);
 		return "edit_stud";
 	}
+	
+	
 	
 	@PostMapping("/saveStud")
 	public String saveStud(@ModelAttribute StudDet stud,HttpSession session)
@@ -71,7 +95,7 @@ public class StudController
 		{
 			session.setAttribute("msg","Something went wrong");
 		}
-		return "redirect:/";
+		return "redirect:/editStud";
 	}
 	
 	
@@ -88,7 +112,7 @@ public class StudController
 			session.setAttribute("msg","Something went wrong");
 		}
 		 
-		return "redirect:/";
+		return "redirect:/editStud";
 	}
 	
 	@GetMapping("/contact")
@@ -96,7 +120,6 @@ public class StudController
 	{
 		return "contact";
 	}
-	
 	
 
 }
