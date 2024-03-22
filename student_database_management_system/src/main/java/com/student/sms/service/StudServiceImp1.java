@@ -3,21 +3,26 @@ package com.student.sms.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.student.sms.entity.StudDet;
+import com.student.sms.entity.User;
 import com.student.sms.repository.StudRepository;
+import com.student.sms.repository.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 
 @Service
 public class StudServiceImp1 implements StudService
 {
-
 	@Autowired
 	private StudRepository studRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 	@Override
 	public StudDet saveStud(StudDet stud) {
@@ -50,11 +55,45 @@ public class StudServiceImp1 implements StudService
 		return false;
 	}
 	
+	@Override
+	public User createUser(User user) {
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		String encryptdPwd = bcrypt.encode(user.getPassword());
+		String encryptConfirmPwd = bcrypt.encode(user.getConfirmPassword());
+		user.setPassword(encryptdPwd);
+		user.setConfirmPassword(encryptConfirmPwd);
+	
+		return userRepo.save(user); 
+	}
+
+	@Override
+	public boolean checkEmail(String email) {
+		
+		return userRepo.existsByEmail(email);
+	}
+	
 	public void removeSessionMessage()
 	{
 		HttpSession session=((ServletRequestAttributes)(RequestContextHolder.getRequestAttributes())).getRequest().getSession();
 		session.removeAttribute("msg");
 	}
+
+	@Override
+	public User findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepo.findByEmail(email);
+	}
+
+	@Override
+	public List<StudDet> findByKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		return studRepo.findByKeyword(keyword);
+	}
+
+	
+
+
+
 	
 
 }

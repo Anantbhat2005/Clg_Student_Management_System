@@ -5,16 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.student.sms.entity.StudDet;
+import com.student.sms.entity.User;
 import com.student.sms.service.StudService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class StudController 
@@ -22,14 +24,77 @@ public class StudController
 	
 	@Autowired
 	private StudService studService;
+	
+	
 
+	
+	@GetMapping("/register")
+	public String register(Model model, HttpSession session) {
+		model.addAttribute("user", new User());
+		model.addAttribute("succMsg", session.getAttribute("succMsg"));
+		model.addAttribute("errorMsg", session.getAttribute("errorMsg"));
+		session.removeAttribute("succMsg");
+		session.removeAttribute("errorMsg");
+		return "register";
+	}
+	
+	@GetMapping("/login")
+	public String loginPage()
+	{
+		return "login";
+	}
 	
 	
 	@GetMapping("/")
 	public String home()
 	{
-		return "home";
+		return "login";
 	}
+	
+
+	@PostMapping("/createUser")
+	public String createUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model  model, HttpSession session) {
+		
+		if (result.hasErrors()) {
+			System.out.println(result);
+			model.addAttribute("user", user);
+			return "register";
+		}
+
+		boolean emailExist = studService.checkEmail(user.getEmail());
+
+		if (emailExist) {
+			session.setAttribute("errorMsg", "Email id already exists");
+			model.addAttribute("user", user);
+
+
+		} else {
+
+			if (!user.getPassword().equals(user.getConfirmPassword())) {
+				session.setAttribute("errorMsg", "Passwords do not match. Please try again.");
+				model.addAttribute("user", user);
+				
+			}
+
+			else {
+			
+				User userDtls = studService.createUser(user);
+
+				if (userDtls!= null) {
+					session.setAttribute("succMsg","Registration successful! Login to continue");
+					System.out.println();
+					return "register";
+					
+				} else {
+					session.setAttribute("errorMsg", "Something went wrong");
+				}
+			}
+		}
+		return "redirect:/register";
+
+	}
+	
+
 	@GetMapping("/home")
 	public String homePage()
 	{
@@ -43,10 +108,18 @@ public class StudController
 	}
 	
 	@GetMapping("/editStud")
-	public String index(Model m)
+	public String index(Model m,String keyword)
 	{
+		
+		if(keyword!=null)
+		{
+			m.addAttribute("studList",studService.findByKeyword(keyword));
+		}
+		else
+		{
 		List<StudDet> list=studService.getAllStud();
 		m.addAttribute("studList",list);
+		}
 		return "index";
 	}
 	
