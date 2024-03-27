@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org"
+	th:replace="~{base::layout(~{::title}, ~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Logout</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+
+			<div class="row">
+				<div class="col-md-4 offset-md-4 ">
+					<div class="my-card card mx-auto p-4 mt-3 " >
+						<div class="container  text-center">
+
+							<img style="width: 50px;" src="" th:src="@{/img/exit.png}"></img>
+						
+						<div class="mt-2  text-center  fs-4">Logout</div>
+						</div>
+						<div class="card-body">
+
+							<form th:action="@{logoutUser}" method="post" th:object="${user}">
+
+
+								<div class="mb-3">
+									<label>Enter User name</label> <input type="text" id=email
+										name="email" th:field="${user.email}" class="form-control" />
+									<div th:if="${#fields.hasErrors('email')}" style="color: red;">User
+										name not exist</div>
+
+
+								</div>
+
+								<div class="mb-3">
+									<label for=password>Enter password</label> <input
+										type="password" name="password" th:field="${user.password}"
+										class="form-control" />
+
+									<div th:if="${#fields.hasErrors('password')}"
+										style="color: red;">Invalid password</div>
+
+								</div>
+
+
+
+								<a href="/login"><button class="btn btn-danger col-md-12">
+										Logout</button></a>
+
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+	</section>
+</body>
+</html>

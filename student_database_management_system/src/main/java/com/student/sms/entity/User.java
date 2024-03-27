@@ -1,5 +1,6 @@
 package com.student.sms.entity;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,9 +9,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+
+
 @Entity
 public class User {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int  id;
@@ -25,6 +27,7 @@ public class User {
 	private String email;
 	
 	@NotBlank(message = "Password cannot be blank !!")
+	@Size(min=8, message = "Password must be at least 8 characters long")
 	private String password;
 	
 	@NotBlank(message = "Please confirm your password !!")
@@ -105,5 +108,9 @@ public class User {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
 				+ ", confirmPassword=" + confirmPassword + "]";
 	}
-
+	
+	
+	
+	
+	
 }

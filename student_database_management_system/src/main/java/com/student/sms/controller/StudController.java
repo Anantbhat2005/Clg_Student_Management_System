@@ -24,9 +24,8 @@ public class StudController
 	
 	@Autowired
 	private StudService studService;
+	private Object id;
 	
-	
-
 	
 	@GetMapping("/register")
 	public String register(Model model, HttpSession session) {
@@ -36,19 +35,6 @@ public class StudController
 		session.removeAttribute("succMsg");
 		session.removeAttribute("errorMsg");
 		return "register";
-	}
-	
-	@GetMapping("/login")
-	public String loginPage()
-	{
-		return "login";
-	}
-	
-	
-	@GetMapping("/")
-	public String home()
-	{
-		return "login";
 	}
 	
 
@@ -80,10 +66,10 @@ public class StudController
 			
 				User userDtls = studService.createUser(user);
 
-				if (userDtls!= null) {
-					session.setAttribute("succMsg","Registration successful! Login to continue");
+				if (userDtls != null) {
+					session.setAttribute("succMsg", "Registration successful");
 					System.out.println();
-					return "register";
+					return "login";
 					
 				} else {
 					session.setAttribute("errorMsg", "Something went wrong");
@@ -93,6 +79,40 @@ public class StudController
 		return "redirect:/register";
 
 	}
+	@GetMapping("/login")
+	public String login(Model model, HttpSession session) {
+		model.addAttribute("user", new User());
+		model.addAttribute("succMsg", session.getAttribute("succMsg"));
+		model.addAttribute("errorMsg", session.getAttribute("errorMsg"));
+		session.removeAttribute("succMsg");
+		session.removeAttribute("errorMsg");
+		
+		return "login";
+	}
+	
+	
+	@PostMapping("/authenticateUser")
+	public String authenticateUser(@Valid @ModelAttribute("user") User user, BindingResult bresult, Model  model, HttpSession session) {
+			
+		 
+		 if(!studService.checkEmail(user.getEmail())) {
+			 bresult.rejectValue("email","","Username is not existed");
+		 }
+		 else if(!studService.ValidatePassword(user)){
+			 bresult.rejectValue("password","","Invalid password");
+			
+		 }
+		 else {
+			 session.setAttribute("succMsg", "Login successfully");
+			 return "home";
+		 }
+		 session.removeAttribute("succMsg");
+	return "login";
+		
+	}
+	
+
+	
 	
 
 	@GetMapping("/home")
@@ -117,6 +137,7 @@ public class StudController
 		}
 		else
 		{
+			
 		List<StudDet> list=studService.getAllStud();
 		m.addAttribute("studList",list);
 		}
@@ -193,6 +214,43 @@ public class StudController
 	{
 		return "contact";
 	}
+	
+	@GetMapping("/userprof")
+	public String userprof() {
+		return "userprof";
+	}
+
+	@GetMapping("/logout")
+	public String logout(Model model, HttpSession session) {
+		model.addAttribute("user", new User());
+		model.addAttribute("succMsg", session.getAttribute("succMsg"));
+		model.addAttribute("errorMsg", session.getAttribute("errorMsg"));
+		session.removeAttribute("succMsg");
+		session.removeAttribute("errorMsg");
+		
+		return "logout";
+	}
+	
+	@PostMapping("/logoutUser")
+	public String logoutUser(@Valid @ModelAttribute("user") User user, BindingResult bresult, Model  model, HttpSession session) {
+				 
+				 if(!studService.checkEmail(user.getEmail())) {
+					 bresult.rejectValue("email","","Username is not existed");
+
+				 }
+				 else if(!studService.ValidatePassword(user)){
+					 bresult.rejectValue("password","","Invalid password");	
+				 }
+				 else {
+					 session.setAttribute("succMsg", "Logout successfully");
+					 return "login";
+				 }
+			
+			return "logout";
+		
+	}
+
+
 	
 
 }

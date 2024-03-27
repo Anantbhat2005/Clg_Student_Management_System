@@ -1,6 +1,7 @@
 package com.student.sms.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -78,16 +79,31 @@ public class StudServiceImp1 implements StudService
 		session.removeAttribute("msg");
 	}
 
-	@Override
-	public User findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return userRepo.findByEmail(email);
-	}
+	
+
+
 
 	@Override
 	public List<StudDet> findByKeyword(String keyword) {
 		// TODO Auto-generated method stub
 		return studRepo.findByKeyword(keyword);
+	}
+
+	@Override
+	public boolean ValidatePassword(User user) {
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		Optional<User> opUser = userRepo.findByEmail(user.getEmail());
+		if(opUser.isPresent()) {
+			User dbUser = opUser.get();
+			if(bcrypt.matches(user.getPassword(), dbUser.getPassword())) {
+		
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	return false;
 	}
 
 	

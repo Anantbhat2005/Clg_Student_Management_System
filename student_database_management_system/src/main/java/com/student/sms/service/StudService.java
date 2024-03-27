@@ -13,9 +13,11 @@ public interface StudService {
 	public boolean deleteStud(int id);
 	public User createUser (User user);
 	public boolean checkEmail(String email);
-	User findByEmail(String email);
+	
 	
 	public List<StudDet> findByKeyword(String keyword);
+	public boolean ValidatePassword(User user);
+
 	
 
 
